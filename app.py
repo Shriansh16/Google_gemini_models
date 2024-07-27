@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-load_dotenv
+load_dotenv()
 import streamlit as st
 import os
 from PIL import Image
@@ -11,8 +11,8 @@ import google.generativeai as genai
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_gemini_response(input,pdf_content,prompt):
-    model=genai.GenerativeModel('gemini-pro-vision')
-    response=model.gnerate_content([input,pdf_content[0],prompt])
+    model=genai.GenerativeModel('gemini-1.5-flash')
+    response=model.generate_content([input,pdf_content[0],prompt])
     return response.text
 def input_pdf_setup(uploaded_file):
     if uploaded_file is not None:
