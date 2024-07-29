@@ -1,16 +1,22 @@
-import streamlit as st
-import google.generativeai as genai
-import os
+### Health Management APP
 from dotenv import load_dotenv
+
+load_dotenv() ## load all the environment variables
+
+import streamlit as st
+import os
+import google.generativeai as genai
 from PIL import Image
-load_dotenv()
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-def get_genai_response(input,prompt,image):
-    model=genai.GenerativeModel('gemini-pro-vision')
+## Function to load Google Gemini Pro Vision API And get response
+
+def get_gemini_repsonse(input,image,prompt):
+    model=genai.GenerativeModel('gemini-1.5-pro')
     response=model.generate_content([input,image[0],prompt])
     return response.text
+
 
 def input_image_setup(uploaded_file):
     # Check if a file has been uploaded
@@ -60,6 +66,7 @@ You are an expert in nutritionist where you need to see the food items from the 
 
 if submit:
     image_data=input_image_setup(uploaded_file)
-    response=get_genai_response(input_prompt,image_data,input)
+    response=get_gemini_repsonse(input_prompt,image_data,input)
     st.subheader("The Response is")
     st.write(response)
+
